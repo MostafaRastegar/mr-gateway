@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  table.table.table-striped
+    tbody
+      tr
+        td Your orderId
+        td #{orderId}
+      tr
+        td Your price:
+        td #{price}
+  div.text-center
+    a.btn.btn-success.mr-5(href="http://localhost:4001/success/#{orderId}/#{token}") success
+    a.btn.btn-danger(href="http://localhost:4001/success/#{orderId}/#{token}") failed

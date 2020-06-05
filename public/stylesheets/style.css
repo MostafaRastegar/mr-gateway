@@ -1,0 +1,29 @@
+html,
+body {
+  height: 100%;
+  background: #00c3b1;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+  height: 100%;
+  justify-content: center;
+}
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+a {
+  color: #00b7ff;
+}
+.table {
+  color: #212529;
+  background: #f3f3f3;
+  margin: 35px 0;
+}
+.max-320 {
+  max-width: 320px;
+  margin: 150px auto;
+}

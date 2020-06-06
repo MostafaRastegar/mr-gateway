@@ -1,16 +1,11 @@
 const express = require("express");
-const MongoClient = require("mongodb").MongoClient;
-const assert = require("assert");
-const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 const { mrConnect } = require("../mongoUtils/connect");
 const { v4: uuidv4 } = require("uuid");
+const { ACCESS_TOKEN } = process.env;
+const router = express.Router();
+
 dotenv.config();
-const { ACCESS_TOKEN, DB_URL } = process.env;
-const url = "mongodb://localhost:27017";
-const dbName = "test";
-
-
 // const users = [
 //   {
 //     userName: "john",
@@ -26,7 +21,6 @@ const dbName = "test";
 //   },
 // ];
 
-var router = express.Router();
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -35,36 +29,22 @@ router.get("/", function (req, res, next) {
 
 /* GET users page. */
 router.get("/users", function (req, res, next) {
-  console.log('start')
-  mrConnect( myDb => {
-    myDb.collection("users")
-    .find({})
-    .toArray((findErr, users) => {
-      if (findErr) throw findErr;
-      res.render("users", { title: "Users table", users });
-    });
-  })
-  // MongoClient.connect(url, function (err, client) {
-  //   assert.equal(null, err);
-  //   console.log("Connected successfully to server");
-  //   db = client.db(dbName);
-  //   db.collection("users")
-  //     .find({})
-  //     .toArray((findErr, users) => {
-  //       if (findErr) throw findErr;
-  //       res.render("users", { title: "Users table", users });
-  //     });
-  //   client.close();
-  // });
+  mrConnect((myDb) => {
+    myDb
+      .collection("users")
+      .find({})
+      .toArray((findErr, users) => {
+        if (findErr) throw findErr;
+        res.render("users", { title: "Users table", users });
+      });
+  });
 });
 
 /* GET transaction page. */
 router.get("/transactions", function (req, res, next) {
-  MongoClient.connect(url, function (err, client) {
-    assert.equal(null, err);
-    console.log("Connected successfully to server");
-    db = client.db(dbName);
-    db.collection("transactions")
+  mrConnect((myDb) => {
+    myDb
+      .collection("transactions")
       .find({})
       .toArray((findErr, transactionArr) => {
         if (findErr) throw findErr;
@@ -73,19 +53,15 @@ router.get("/transactions", function (req, res, next) {
           transactionArr: transactionArr.reverse(),
         });
       });
-    client.close();
   });
 });
 
 /* GET users listing. */
 router.post("/login", function (req, res, next) {
   const { userName, userPassword, token } = req.body;
-  // Use connect method to connect to the
-  MongoClient.connect(url, function (err, client) {
-    assert.equal(null, err);
-    console.log("Connected successfully to server");
-    db = client.db(dbName);
-    db.collection("users")
+  mrConnect((myDb) => {
+    myDb
+      .collection("users")
       .find({})
       .toArray((findErr, result) => {
         if (findErr) throw findErr;
@@ -101,7 +77,6 @@ router.post("/login", function (req, res, next) {
           res.send("Username or userPassword incorrect");
         }
       });
-    client.close();
   });
 });
 
@@ -125,48 +100,12 @@ router.post("/bank", function (req, res, next) {
   };
 
   // Use connect method to connect to the
-  MongoClient.connect(url, function (err, client) {
-    assert.equal(null, err);
-    db = client.db(dbName);
-    db.collection("transactions").insertOne(result, (findErr, addResult) => {
+  mrConnect((myDb) => {
+    myDb.collection("transactions").insertOne(result, (findErr, addResult) => {
       if (findErr) throw findErr;
       res.render("bank", { title: "Bank gateway", result });
-      client.close();
     });
   });
 });
-
-// router.post("/login", (req, res) => {
-//   // Read userName and userPassword from request body
-//   const { userName, userPassword, token } = req.body;
-//
-//   // Filter user from the users array by userName and userPassword
-//   const user = users.find((u) => {
-//     return u.userName === userName && u.userPassword === userPassword;
-//   });
-//
-//   console.log({
-//     ACCESS_TOKEN,
-//     user
-//   })
-//
-//   if (user && user.token === ACCESS_TOKEN) {
-//     // Generate an access token
-//     const accessToken = jwt.sign(
-//       { userName: user.userName, role: user.role },
-//       ACCESS_TOKEN
-//     );
-//     const refId = uuidv4(null,null,5);
-//
-//     // res.json({
-//     //   accessToken,
-//     // });
-//     res.json({
-//       refId
-//     });
-//   } else {
-//     res.send("Username or userPassword incorrect");
-//   }
-// });
 
 module.exports = router;

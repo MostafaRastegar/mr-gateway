@@ -1,20 +1,16 @@
-const express = require("express");
+// const express = require("express");
 const MongoClient = require("mongodb").MongoClient;
 const assert = require("assert");
-const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
-const { v4: uuidv4 } = require("uuid");
 dotenv.config();
-const { ACCESS_TOKEN, DB_URL } = process.env;
-const url = "mongodb://localhost:27017";
-const dbName = "test";
+const { ACCESS_TOKEN, DB_URL, DB_NAME } = process.env;
 
-const mrConnect = (call) => {
-  MongoClient.connect(url, function (err, client) {
+const mrConnect = (callFunc) => {
+  MongoClient.connect(DB_URL, function (err, client) {
     assert.equal(null, err);
     console.log("Connected successfully to server");
-    db = client.db(dbName);
-    call(db);
+    db = client.db(DB_NAME);
+    callFunc(db);
     client.close();
   });
 }

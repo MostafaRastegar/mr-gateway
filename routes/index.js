@@ -1,24 +1,28 @@
 const express = require("express");
+const MongoClient = require('mongodb').MongoClient;
+const assert = require('assert');
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 const { v4: uuidv4 } = require("uuid");
 dotenv.config();
-const { ACCESS_TOKEN } = process.env;
+const { ACCESS_TOKEN, DB_URL } = process.env;
+const url = 'mongodb://localhost:27017';
+const dbName = 'test';
 
-const users = [
-  {
-    userName: "john",
-    userPassword: "password123admin",
-    role: "admin",
-    token: "youraccesstokensecret",
-  },
-  {
-    userName: "anna",
-    userPassword: "password123member",
-    role: "member",
-    token: "youraccesstokensecret",
-  },
-];
+// const users = [
+//   {
+//     userName: "john",
+//     userPassword: "password123admin",
+//     role: "admin",
+//     token: "youraccesstokensecret",
+//   },
+//   {
+//     userName: "anna",
+//     userPassword: "password123member",
+//     role: "member",
+//     token: "youraccesstokensecret",
+//   },
+// ];
 
 var router = express.Router();
 /* GET home page. */
@@ -29,19 +33,27 @@ router.get("/", function (req, res, next) {
 /* GET users listing. */
 router.post("/login", function (req, res, next) {
   const { userName, userPassword, token } = req.body;
-
-  // Filter user from the users array by userName and userPassword
-  const user = users.find((u) => {
-    return u.userName === userName && u.userPassword === userPassword;
-  });
-  console.log(user)
-  if (user && user.token === ACCESS_TOKEN) {
-    res.json({
-      status: 'ok'
+  // Use connect method to connect to the
+  MongoClient.connect(url, function(err, client) {
+    assert.equal(null, err);
+    console.log("Connected successfully to server");
+    db = client.db(dbName);
+    db.collection('users').find({}).toArray((findErr, result) => {
+      if (findErr) throw findErr
+      // Filter user from the users array by userName and userPassword
+      const user = result.find((u) => {
+        return u.userName === userName && u.userPassword === userPassword;
+      });
+      if (user && user.token === ACCESS_TOKEN) {
+        res.json({
+          status: 'ok'
+        });
+      } else {
+        res.send("Username or userPassword incorrect");
+      }
     });
-  } else {
-    res.send("Username or userPassword incorrect");
-  }
+    client.close();
+  });
 });
 
 router.post("/bank", function (req, res, next) {
@@ -55,7 +67,19 @@ router.post("/bank", function (req, res, next) {
     saleOrderId: orderId,
     SaleReferenceId: Math.floor(Math.random() * 10000000),
   }
-  res.render("bank", { title: "Bank gateway", result });
+
+  // Use connect method to connect to the
+  MongoClient.connect(url, function(err, client) {
+    assert.equal(null, err);
+    db = client.db(dbName);
+    db.collection('transaction').insertOne(result, (findErr, addResult) => {
+      if (findErr) throw findErr
+      res.render("bank", { title: "Bank gateway", result });
+      client.close();
+    });
+  });
+
+
 });
 
 // router.post("/login", (req, res) => {

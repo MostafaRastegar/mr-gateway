@@ -7,10 +7,14 @@ block content
     tbody
       tr
         td Your orderId
-        td #{orderId}
+        td #{result.orderId}
       tr
         td Your price:
-        td #{price}
-  div.text-center
-    a.btn.btn-success.mr-5(href="http://localhost:4001/success/#{orderId}/#{token}") success
-    a.btn.btn-danger(href="http://localhost:4001/success/#{orderId}/#{token}") failed
+        td #{result.price}
+  div.text-center.row
+    .col
+      form(action="#{result.backLink}",method="post", name="bank")
+        input(type="hidden", name="orderId", value="#{result.orderId}")
+        button.btn.btn-success(type="submit") success
+    .col
+      a.btn.btn-danger(href="http://localhost:4001/failed") failed

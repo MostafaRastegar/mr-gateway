@@ -1,98 +1,111 @@
 const express = require("express");
-const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
+const { mrConnect } = require("../mongoUtils/connect");
 const { v4: uuidv4 } = require("uuid");
-dotenv.config();
 const { ACCESS_TOKEN } = process.env;
+const router = express.Router();
 
-const users = [
-  {
-    username: "john",
-    password: "password123admin",
-    role: "admin",
-    token: "youraccesstokensecret",
-  },
-  {
-    username: "anna",
-    password: "password123member",
-    role: "member",
-    token: "youraccesstokensecret",
-  },
-];
+dotenv.config();
+// const users = [
+//   {
+//     userName: "john",
+//     userPassword: "password123admin",
+//     role: "admin",
+//     token: "youraccesstokensecret",
+//   },
+//   {
+//     userName: "anna",
+//     userPassword: "password123member",
+//     role: "member",
+//     token: "youraccesstokensecret",
+//   },
+// ];
 
-var router = express.Router();
+
 /* GET home page. */
 router.get("/", function (req, res, next) {
   res.render("index", { title: "Express" });
 });
 
+/* GET users page. */
+router.get("/users", function (req, res, next) {
+  mrConnect((myDb) => {
+    myDb
+      .collection("users")
+      .find({})
+      .toArray((findErr, users) => {
+        if (findErr) throw findErr;
+        res.render("users", { title: "Users table", users });
+      });
+  });
+});
+
+/* GET transaction page. */
+router.get("/transactions", function (req, res, next) {
+  mrConnect((myDb) => {
+    myDb
+      .collection("transactions")
+      .find({})
+      .toArray((findErr, transactionArr) => {
+        if (findErr) throw findErr;
+        res.render("transactions", {
+          title: "Transactions table",
+          transactionArr: transactionArr.reverse(),
+        });
+      });
+  });
+});
+
 /* GET users listing. */
 router.post("/login", function (req, res, next) {
-  const { username, password, token } = req.body;
-  console.log({
-    token,
-    username,
-    password,
+  const { userName, userPassword, token } = req.body;
+  mrConnect((myDb) => {
+    myDb
+      .collection("users")
+      .find({})
+      .toArray((findErr, result) => {
+        if (findErr) throw findErr;
+        // Filter user from the users array by userName and userPassword
+        const user = result.find((u) => {
+          return u.userName === userName && u.userPassword === userPassword;
+        });
+        if (user && user.token === ACCESS_TOKEN) {
+          res.json({
+            status: "ok",
+          });
+        } else {
+          res.send("Username or userPassword incorrect");
+        }
+      });
   });
-  // Filter user from the users array by username and password
-  const user = users.find((u) => {
-    return u.username === username && u.password === password;
-  });
-
-  if (user && user.token === ACCESS_TOKEN) {
-    res.json({
-      status: 'ok'
-    });
-  } else {
-    res.send("Username or password incorrect");
-  }
 });
 
 router.post("/bank", function (req, res, next) {
-  const { orderId, token, backLink, price, username, password } = req.body;
+  const {
+    orderId,
+    token,
+    callBackUrl,
+    amount,
+    userName,
+    userPassword,
+  } = req.body;
   const refId = uuidv4();
   const result = {
     refId,
     orderId,
-    backLink,
-    price,
+    callBackUrl,
+    amount,
     saleOrderId: orderId,
-    SaleReferenceId: Math.floor(Math.random() * 10000000)
-  }
-  res.render("bank", { title: "Bank gateway", result });
-});
+    SaleReferenceId: Math.floor(Math.random() * 10000000),
+  };
 
-// router.post("/login", (req, res) => {
-//   // Read username and password from request body
-//   const { username, password, token } = req.body;
-//
-//   // Filter user from the users array by username and password
-//   const user = users.find((u) => {
-//     return u.username === username && u.password === password;
-//   });
-//
-//   console.log({
-//     ACCESS_TOKEN,
-//     user
-//   })
-//
-//   if (user && user.token === ACCESS_TOKEN) {
-//     // Generate an access token
-//     const accessToken = jwt.sign(
-//       { username: user.username, role: user.role },
-//       ACCESS_TOKEN
-//     );
-//     const refId = uuidv4(null,null,5);
-//
-//     // res.json({
-//     //   accessToken,
-//     // });
-//     res.json({
-//       refId
-//     });
-//   } else {
-//     res.send("Username or password incorrect");
-//   }
-// });
+  // Use connect method to connect to the
+  mrConnect((myDb) => {
+    myDb.collection("transactions").insertOne(result, (findErr, addResult) => {
+      if (findErr) throw findErr;
+      res.render("bank", { title: "Bank gateway", result });
+    });
+  });
+});
 
 module.exports = router;

@@ -1,20 +1,24 @@
 extends layout
-
 block content
-  h1= title
-  p Welcome to #{title}
-  table.table.table-striped
-    tbody
-      tr
-        td Your orderId
-        td #{result.orderId}
-      tr
-        td Your price:
-        td #{result.price}
-  div.text-center.row
-    .col
-      form(action="#{result.backLink}",method="post", name="bank")
-        input(type="hidden", name="orderId", value="#{result.orderId}")
-        button.btn.btn-success(type="submit") success
-    .col
-      a.btn.btn-danger(href="http://localhost:4001/failed") failed
+  div.max-320.center-flex
+    h1= title
+    p Welcome to #{title}
+    table.table.table-striped
+      tbody
+        tr
+          td Your orderId
+          td #{result.orderId}
+        tr
+          td Your amount:
+          td #{result.amount}
+    div.text-center.row
+      .col
+        form(action="#{result.callBackUrl}",method="post", name="bank")
+          input(type="hidden", name="orderId", value="#{result.orderId}")
+          input(type="hidden", name="ResCode", value="0")
+          button.btn.btn-success(type="submit") success
+      .col
+        form(action="#{result.callBackUrl}",method="post", name="bank")
+          input(type="hidden", name="orderId", value="#{result.orderId}")
+          input(type="hidden", name="ResCode", value="17")
+          button.btn.btn-danger(type="submit") failed

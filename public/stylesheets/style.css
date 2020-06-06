@@ -4,11 +4,13 @@ body {
   background: #00c3b1;
 }
 .container {
+  height: 100%;
+}
+.center-flex {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-items: center;
-  height: 100%;
   justify-content: center;
 }
 body {

@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  h1= title
+  - var transactions = transactionArr
+  table.table.table-striped.mt-5.mb-5
+    thead
+      tr
+        td Id
+        td RefId
+        td Amount
+        td SaleOrderId
+        td SaleReferenceId
+        td CallBackUrl
+    tbody
+      each transaction in transactions
+        tr
+          td #{transaction._id}
+          td #{transaction.refId}
+          td #{transaction.amount}
+          td #{transaction.saleOrderId}
+          td #{transaction.SaleReferenceId}
+          td #{transaction.callBackUrl}

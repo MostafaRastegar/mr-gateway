@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  h1= title
+  - var usersArr = users
+  table.table.table-striped.mt-5.mb-5
+    thead
+      tr
+        td Id
+        td UserName
+        td UserPassword
+        td Token
+    tbody
+      each user in usersArr
+        tr
+          td #{user._id}
+          td #{user.userName}
+          td #{user.userPassword}
+          td #{user.token}

@@ -7,14 +7,14 @@ const { ACCESS_TOKEN } = process.env;
 
 const users = [
   {
-    username: "john",
-    password: "password123admin",
+    userName: "john",
+    userPassword: "password123admin",
     role: "admin",
     token: "youraccesstokensecret",
   },
   {
-    username: "anna",
-    password: "password123member",
+    userName: "anna",
+    userPassword: "password123member",
     role: "member",
     token: "youraccesstokensecret",
   },
@@ -28,47 +28,43 @@ router.get("/", function (req, res, next) {
 
 /* GET users listing. */
 router.post("/login", function (req, res, next) {
-  const { username, password, token } = req.body;
-  console.log({
-    token,
-    username,
-    password,
-  });
-  // Filter user from the users array by username and password
-  const user = users.find((u) => {
-    return u.username === username && u.password === password;
-  });
+  const { userName, userPassword, token } = req.body;
 
+  // Filter user from the users array by userName and userPassword
+  const user = users.find((u) => {
+    return u.userName === userName && u.userPassword === userPassword;
+  });
+  console.log(user)
   if (user && user.token === ACCESS_TOKEN) {
     res.json({
       status: 'ok'
     });
   } else {
-    res.send("Username or password incorrect");
+    res.send("Username or userPassword incorrect");
   }
 });
 
 router.post("/bank", function (req, res, next) {
-  const { orderId, token, backLink, price, username, password } = req.body;
+  const { orderId, token, callBackUrl, amount, userName, userPassword } = req.body;
   const refId = uuidv4();
   const result = {
     refId,
     orderId,
-    backLink,
-    price,
+    callBackUrl,
+    amount,
     saleOrderId: orderId,
-    SaleReferenceId: Math.floor(Math.random() * 10000000)
+    SaleReferenceId: Math.floor(Math.random() * 10000000),
   }
   res.render("bank", { title: "Bank gateway", result });
 });
 
 // router.post("/login", (req, res) => {
-//   // Read username and password from request body
-//   const { username, password, token } = req.body;
+//   // Read userName and userPassword from request body
+//   const { userName, userPassword, token } = req.body;
 //
-//   // Filter user from the users array by username and password
+//   // Filter user from the users array by userName and userPassword
 //   const user = users.find((u) => {
-//     return u.username === username && u.password === password;
+//     return u.userName === userName && u.userPassword === userPassword;
 //   });
 //
 //   console.log({
@@ -79,7 +75,7 @@ router.post("/bank", function (req, res, next) {
 //   if (user && user.token === ACCESS_TOKEN) {
 //     // Generate an access token
 //     const accessToken = jwt.sign(
-//       { username: user.username, role: user.role },
+//       { userName: user.userName, role: user.role },
 //       ACCESS_TOKEN
 //     );
 //     const refId = uuidv4(null,null,5);
@@ -91,7 +87,7 @@ router.post("/bank", function (req, res, next) {
 //       refId
 //     });
 //   } else {
-//     res.send("Username or password incorrect");
+//     res.send("Username or userPassword incorrect");
 //   }
 // });
 

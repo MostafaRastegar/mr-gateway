@@ -27,13 +27,10 @@ router.get("/", function (req, res, next) {
 });
 
 /* GET users listing. */
-router.post("/bank", function (req, res, next) {
-  const { orderId, token, backLink, price, username, password } = req.body;
+router.post("/login", function (req, res, next) {
+  const { username, password, token } = req.body;
   console.log({
-    orderId,
     token,
-    backLink,
-    price,
     username,
     password,
   });
@@ -43,20 +40,26 @@ router.post("/bank", function (req, res, next) {
   });
 
   if (user && user.token === ACCESS_TOKEN) {
-    const refId = uuidv4();
-    const result = {
-      refId,
-      orderId,
-      backLink,
-      saleOrderId: orderId,
-      SaleReferenceId: Math.floor(Math.random() * 10000000)
-    }
-    res.json(result);
+    res.json({
+      status: 'ok'
+    });
   } else {
     res.send("Username or password incorrect");
   }
-  // res.redirect(backLink);
-  res.render("bank", { title: "Bank gateway", ...result });
+});
+
+router.post("/bank", function (req, res, next) {
+  const { orderId, token, backLink, price, username, password } = req.body;
+  const refId = uuidv4();
+  const result = {
+    refId,
+    orderId,
+    backLink,
+    price,
+    saleOrderId: orderId,
+    SaleReferenceId: Math.floor(Math.random() * 10000000)
+  }
+  res.render("bank", { title: "Bank gateway", result });
 });
 
 // router.post("/login", (req, res) => {

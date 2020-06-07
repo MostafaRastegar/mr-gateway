@@ -1,6 +1,6 @@
 # mr-gateway
-1 - install mongoDb on your system
-2 - create "users" collection in mongoDb with this data:
+* 1 - install mongoDb on your system
+* 2 - create "users" collection in mongoDb with this data:
 ``` js
 [
   {
@@ -17,7 +17,10 @@
   },
 ]
 ```
-3 - create "transactions" collection in mongoDb
-4 - `git clone https://github.com/MostafaRastegar/mr-gateway.git`
-5 - `npm install` or `yarn`
-6 - `npm start` or `yarn start`
+* 3 - create "transactions" collection in mongoDb
+* 4 - `git clone https://github.com/MostafaRastegar/mr-gateway.git`
+* 5 - `cp .env-example .env`
+* 6 - `npm install` or `yarn`
+* 7 - `npm start` or `yarn start`
+* 8 - you can view users table on localhost:4002/users
+* 9 - you can view transactions table on localhost:4002/transactions

@@ -14,7 +14,7 @@ router.get("/", function (req, res, next) {
 /* GET users page. */
 router.get("/users", function (req, res, next) {
   mrFindAll("users", (data) =>
-    res.render("users", { title: "Users table", users: data })
+    res.render("users", { title: "Users table", result: data })
   );
 });
 
@@ -23,12 +23,11 @@ router.get("/transactions", function (req, res, next) {
   mrFindAll("transactions", (data) => {
     res.render("transactions", {
       title: "Transactions table",
-      transactionArr: data.reverse(),
+      result: data.reverse(),
     });
   });
 });
 
-/* GET users listing. */
 router.post("/login", function (req, res, next) {
   const { userName, userPassword, token } = req.body;
   mrFindAll("users", (data) => {
@@ -65,7 +64,6 @@ router.post("/bank", function (req, res, next) {
     SaleReferenceId: Math.floor(Math.random() * 10000000),
   };
 
-  // Use connect method to connect to the
   mrInsertOne("transactions", inputData, (data) => {
     res.render("bank", { title: "Bank gateway", result: data });
   });

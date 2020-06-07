@@ -17,11 +17,11 @@
   },
 ]
 ```
-* 3  - create "transactions" collection in mongoDb
+* 3  - create `transactions` collection in mongoDb
 * 4  - `git clone https://github.com/MostafaRastegar/mr-gateway.git`
 * 5  - `cp .env-example .env`
 * 6  - `npm install` or `yarn`
 * 7  - `npm start` or `yarn start`
-* 8  - you can view users table on localhost:4002/users
-* 9  - you can view transactions table on localhost:4002/transactions
+* 8  - you can view `users` table on `localhost:4002/users`
+* 9  - you can view `transactions` table on `localhost:4002/transactions`
 * 10 - for view checkout page demo, clone and install `https://github.com/MostafaRastegar/mr-checkout.git`

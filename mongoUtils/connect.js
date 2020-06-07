@@ -1,4 +1,3 @@
-
 const MongoClient = require("mongodb").MongoClient;
 const assert = require("assert");
 const dotenv = require("dotenv");
@@ -13,27 +12,30 @@ const mrConnect = (callFunc) => {
     callFunc(db);
     client.close();
   });
-}
+};
 
-const mrFindAll = (db,collectionName,callFunc) => {
-  db
-    .collection(collectionName)
-    .find({})
-    .toArray((findErr, data) => {
-      if (findErr) throw findErr;
-      callFunc(data)
-    });
-}
-
-const mrInsertOne = (db,collectionName,input,callFunc) => {
-  db.collection(collectionName).insertOne(input, (findErr, addResult) => {
-    if (findErr) throw findErr;
-    callFunc(input)
+const mrFindAll = (collectionName, callFunc) => {
+  mrConnect((db) => {
+    db.collection(collectionName)
+      .find({})
+      .toArray((findErr, data) => {
+        if (findErr) throw findErr;
+        callFunc(data);
+      });
   });
-}
+};
+
+const mrInsertOne = (collectionName, input, callFunc) => {
+  mrConnect((db) => {    
+    db.collection(collectionName).insertOne(input, (findErr, addResult) => {
+      if (findErr) throw findErr;
+      callFunc(input);
+    });
+  })
+};
 
 module.exports = {
   mrConnect,
   mrFindAll,
-  mrInsertOne
+  mrInsertOne,
 };

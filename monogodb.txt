@@ -1,3 +1,22 @@
+// const users = [
+//   {
+//     userName: "john",
+//     userPassword: "password123admin",
+//     role: "admin",
+//     token: "youraccesstokensecret",
+//   },
+//   {
+//     userName: "anna",
+//     userPassword: "password123member",
+//     role: "member",
+//     token: "youraccesstokensecret",
+//   },
+// ];
+
+
+
+
+
 db.createUser(
   {
     user: "admin",

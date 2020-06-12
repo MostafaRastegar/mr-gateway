@@ -70,10 +70,22 @@ const mrInsertOne = (collectionName, input, callFunc) => {
   });
 };
 
+const mrUpdate = (collectionName, input, callFunc) => {
+  const { id, ResCode,refId } = input;
+  mrConnect((db, client) => {
+    db.collection(collectionName).update({"refId": refId},{$set: { "ResCode": ResCode}}, (findErr, addResult) => {
+      if (findErr) throw findErr;
+      callFunc(input);
+    });
+    client.close();
+  });
+};
+
 module.exports = {
   mrConnect,
   mrFindAll,
   mrInsertOne,
   mrInitCollections,
   mrCheckAndInsert,
+  mrUpdate
 };

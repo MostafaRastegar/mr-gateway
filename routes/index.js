@@ -5,6 +5,7 @@ const {
   mrFindAll,
   mrInsertOne,
   mrInitCollections,
+  mrUpdate
 } = require("../mongoUtils/connect");
 const { v4: uuidv4 } = require("uuid");
 const { ACCESS_TOKEN } = process.env;
@@ -53,25 +54,27 @@ router.post("/login", function (req, res, next) {
 router.post("/bank", function (req, res, next) {
   const {
     orderId,
-    token,
     callBackUrl,
     amount,
-    userName,
-    userPassword,
   } = req.body;
-  const refId = uuidv4();
 
   const inputData = {
-    refId,
     orderId,
     callBackUrl,
     amount,
+    refId: uuidv4(),
     saleOrderId: orderId,
     SaleReferenceId: Math.floor(Math.random() * 10000000),
   };
 
   mrInsertOne("transactions", inputData, (data) => {
     res.render("bank", { title: "Bank gateway", result: data });
+  });
+});
+
+router.post("/complete-payment", function (req, res, next) {
+  mrUpdate("transactions", req.body, (data) => {
+    res.render("completePayment", { title: "complete payment", result: data });
   });
 });
 

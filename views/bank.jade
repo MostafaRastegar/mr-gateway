@@ -13,12 +13,18 @@ block content
           td #{result.amount}
     div.text-center.row
       .col
-        form(action="#{result.callBackUrl}",method="post", name="bank")
+        form(action="/complete-payment",method="post", name="bank")
+          input(type="hidden", name="id", value="#{result._id}")
           input(type="hidden", name="orderId", value="#{result.orderId}")
+          input(type="hidden", name="refId", value="#{result.refId}")
+          input(type="hidden", name="callBackUrl", value="#{result.callBackUrl}")
           input(type="hidden", name="ResCode", value="0")
           button.btn.btn-success(type="submit") success
       .col
-        form(action="#{result.callBackUrl}",method="post", name="bank")
+        form(action="/complete-payment",method="post", name="bank")
+          input(type="hidden", name="id", value="#{result._id}")
           input(type="hidden", name="orderId", value="#{result.orderId}")
+          input(type="hidden", name="refId", value="#{result.refId}")
+          input(type="hidden", name="callBackUrl", value="#{result.callBackUrl}")
           input(type="hidden", name="ResCode", value="17")
           button.btn.btn-danger(type="submit") failed

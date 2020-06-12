@@ -15,7 +15,7 @@ dotenv.config();
 /* GET home page. */
 router.get("/", function (req, res, next) {
   mrInitCollections();
-  res.render("index", { title: "Express" });
+  res.render("index", { title: "mr-gateway" });
 });
 
 /* GET users page. */

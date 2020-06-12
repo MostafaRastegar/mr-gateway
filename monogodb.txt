@@ -20,7 +20,7 @@
 db.createUser(
   {
     user: "admin",
-    pwd: "m.rastegar",
+    pwd: "rastegar",
     roles: [ { role: "userAdminAnyDatabase", db: "admin" }, "readWriteAnyDatabase" ]
   }
 )
@@ -29,7 +29,7 @@ use admin
 $ db.createUser(
   {
     user: "superAdmin",
-    pwd: "m.rastegar",
+    pwd: "rastegar",
     roles: [ { role: "root", db: "admin" } ]
   })
 
@@ -41,7 +41,7 @@ use test
 db.createUser(
   {
     user: "tester",
-    pwd: "m.rastegar",
+    pwd: "rastegar",
     roles: [ { role: "readWrite", db: "test" },
              { role: "read", db: "reporting" } ]
   }
@@ -51,4 +51,4 @@ db.createUser(
 
 
 
-mongo --port 27017 -u "tester" -p "m.rastegar" --authenticationDatabase "test"
+mongo --port 27017 -u "tester" -p "rastegar" --authenticationDatabase "test"

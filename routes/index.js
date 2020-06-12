@@ -1,6 +1,11 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const { mrConnect, mrFindAll, mrInsertOne } = require("../mongoUtils/connect");
+const {
+  mrConnect,
+  mrFindAll,
+  mrInsertOne,
+  mrInitCollections,
+} = require("../mongoUtils/connect");
 const { v4: uuidv4 } = require("uuid");
 const { ACCESS_TOKEN } = process.env;
 const router = express.Router();
@@ -8,6 +13,7 @@ dotenv.config();
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
+  mrInitCollections();
   res.render("index", { title: "Express" });
 });
 

@@ -1,0 +1,301 @@
+{
+	"id": "52451f39-9427-b27d-4a37-4cf759c041bf",
+	"name": "mr-gateway",
+	"description": "",
+	"order": [
+		"d65e7228-ee86-152d-0dd6-5030469bda41",
+		"4b50c527-5154-d50b-2cf2-d8f5d58f2bb8",
+		"4f098294-e869-70fc-300f-a23ad4f084f2",
+		"aa2142c4-771f-292b-0507-4d13a20f8619",
+		"80bcb5e6-5c4e-fdd7-c327-7f418594959e"
+	],
+	"folders": [],
+	"folders_order": [],
+	"timestamp": 1591989380659,
+	"owner": 0,
+	"public": false,
+	"requests": [
+		{
+			"id": "4b50c527-5154-d50b-2cf2-d8f5d58f2bb8",
+			"headers": "Content-Type: application/x-www-form-urlencoded\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/x-www-form-urlencoded",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{serverUrl}}/bank",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [
+				{
+					"key": "orderId",
+					"value": "3355",
+					"type": "text",
+					"enabled": true,
+					"description": ""
+				},
+				{
+					"key": "callBackUrl",
+					"value": "{{callBackUrl}}",
+					"type": "text",
+					"enabled": true,
+					"description": ""
+				},
+				{
+					"key": "refId",
+					"value": "a3878307-cf74-477d-ac85-35c1f4715d01",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "amount",
+					"value": "650000",
+					"type": "text",
+					"enabled": true,
+					"description": ""
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1591994496556,
+			"name": "{{serverUrl}}/bank",
+			"description": "",
+			"collectionId": "52451f39-9427-b27d-4a37-4cf759c041bf",
+			"responses": []
+		},
+		{
+			"id": "4f098294-e869-70fc-300f-a23ad4f084f2",
+			"headers": "Content-Type: application/x-www-form-urlencoded\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/x-www-form-urlencoded",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{serverUrl}}/complete-payment",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [
+				{
+					"key": "orderId",
+					"value": "3355",
+					"type": "text",
+					"enabled": true,
+					"description": ""
+				},
+				{
+					"key": "callBackUrl",
+					"value": "{{callBackUrl}}",
+					"type": "text",
+					"enabled": true,
+					"description": ""
+				},
+				{
+					"key": "ResCode",
+					"value": "0",
+					"type": "text",
+					"enabled": true,
+					"description": ""
+				},
+				{
+					"key": "refId",
+					"value": "a3878307-cf74-477d-ac85-35c1f4715d01",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1591994410441,
+			"name": "{{serverUrl}}/complete-payment",
+			"description": "",
+			"collectionId": "52451f39-9427-b27d-4a37-4cf759c041bf",
+			"responses": []
+		},
+		{
+			"id": "80bcb5e6-5c4e-fdd7-c327-7f418594959e",
+			"headers": "Content-Type: application/x-www-form-urlencoded\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/x-www-form-urlencoded",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{serverUrl}}/users",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [
+				{
+					"key": "orderId",
+					"value": "3355",
+					"type": "text",
+					"enabled": true,
+					"description": ""
+				},
+				{
+					"key": "callBackUrl",
+					"value": "{{callBackUrl}}",
+					"type": "text",
+					"enabled": true,
+					"description": ""
+				},
+				{
+					"key": "ResCode",
+					"value": "0",
+					"type": "text",
+					"enabled": true,
+					"description": ""
+				},
+				{
+					"key": "refId",
+					"value": "3355",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1591994553211,
+			"name": "{{serverUrl}}/users",
+			"description": "",
+			"collectionId": "52451f39-9427-b27d-4a37-4cf759c041bf",
+			"responses": []
+		},
+		{
+			"id": "aa2142c4-771f-292b-0507-4d13a20f8619",
+			"headers": "Content-Type: application/x-www-form-urlencoded\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/x-www-form-urlencoded",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{serverUrl}}/transactions",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [
+				{
+					"key": "orderId",
+					"value": "3355",
+					"type": "text",
+					"enabled": true,
+					"description": ""
+				},
+				{
+					"key": "callBackUrl",
+					"value": "{{callBackUrl}}",
+					"type": "text",
+					"enabled": true,
+					"description": ""
+				},
+				{
+					"key": "ResCode",
+					"value": "0",
+					"type": "text",
+					"enabled": true,
+					"description": ""
+				},
+				{
+					"key": "refId",
+					"value": "3355",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1591994414392,
+			"name": "{{serverUrl}}/transactions",
+			"description": "",
+			"collectionId": "52451f39-9427-b27d-4a37-4cf759c041bf",
+			"responses": []
+		},
+		{
+			"id": "d65e7228-ee86-152d-0dd6-5030469bda41",
+			"headers": "Content-Type: application/x-www-form-urlencoded\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/x-www-form-urlencoded",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{serverUrl}}/login",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [
+				{
+					"key": "userName",
+					"value": "john",
+					"type": "text",
+					"enabled": true,
+					"description": ""
+				},
+				{
+					"key": "userPassword",
+					"value": "password123admin",
+					"type": "text",
+					"enabled": true,
+					"description": ""
+				},
+				{
+					"key": "token",
+					"value": "youraccesstokensecret",
+					"type": "text",
+					"enabled": true,
+					"description": ""
+				}
+			],
+			"dataMode": "urlencoded",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1591993964111,
+			"name": "{{serverUrl}}/login",
+			"description": "",
+			"collectionId": "52451f39-9427-b27d-4a37-4cf759c041bf",
+			"responses": []
+		}
+	]
+}

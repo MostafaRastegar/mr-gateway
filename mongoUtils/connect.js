@@ -29,9 +29,9 @@ const mrInitCollections = () => {
     db.listCollections().toArray(function (err, collections) {
       const dbCollections = collections.map((item) => item.name);
       const inputUserData = {
-        userName: "john",
-        userPassword: "password123admin",
-        token: "youraccesstokensecret",
+        userName: "mr_gateway",
+        userPassword: "mr_gateway_123456",
+        terminalId: 442530,
       };
       const inputDataTransaction = {
         refId: "036c4805-229e-4bbd-ae2c-d14fb4be0fc8",

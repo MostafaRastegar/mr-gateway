@@ -5,15 +5,15 @@
 [
   {
     userName: "john",
-    userPassword: "password123admin",
+    userPassword: "mr_gateway_123456",
     role: "admin",
-    token: "youraccesstokensecret",
+    token: 442530,
   },
   {
     userName: "anna",
     userPassword: "password123member",
     role: "member",
-    token: "youraccesstokensecret",
+    token: 442530,
   },
 ]
 ```

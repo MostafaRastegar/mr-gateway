@@ -1,5 +1,9 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const dateTime = require('node-datetime');
+const serverdateTime = dateTime.create();
+
+
 const {
   mrConnect,
   mrFindAll,
@@ -43,38 +47,57 @@ router.post("/login", function (req, res, next) {
     });
     if (user && user.token === ACCESS_TOKEN) {
       res.json({
-        status: "ok",
-      });
-    } else {
-      res.send("Username or userPassword incorrect");
+        status: "true",
+      })
+    }else{
+      res.json({
+        status: "false",
+      })
     }
-  });
-});
+  })
+})
 
-router.post("/bank", function (req, res, next) {
+// Post Pay request
+router.post("/mrPayRequet", function (req, res, next) {
   const {
     orderId,
     callBackUrl,
     amount,
+    userName,
+    userPassword,
+    token
   } = req.body;
 
-  const inputData = {
-    orderId,
-    callBackUrl,
-    amount,
-    refId: uuidv4(),
-    saleOrderId: orderId,
-    SaleReferenceId: Math.floor(Math.random() * 10000000),
-  };
+  mrFindAll("users", (data) => {
+    const user = data.find((u) => {
+      return u.userName === userName && u.userPassword === userPassword;
+    });
+    if (user && user.token === ACCESS_TOKEN) {
+      const inputData = {
+        orderId,
+        callBackUrl,
+        amount,
+        dateTime: serverdateTime.format('Y-m-d H:M:S'),
+        refId: uuidv4(),
+        saleOrderId: orderId,
+        saleReferenceId: Math.floor(Math.random() * 10000000),
+      };
 
-  mrInsertOne("transactions", inputData, (data) => {
-    res.render("bank", { title: "Bank gateway", result: data });
+      mrInsertOne("transactions", inputData, (data) => {
+        // res.json(data)
+        res.render("mrPayRequet", { title: "Mr gateway", result: data });
+      });
+
+    } else {
+      res.send("Username or userPassword incorrect");
+    }
   });
+
 });
 
-router.post("/complete-payment", function (req, res, next) {
+router.post("/mrCompletePayment", function (req, res, next) {
   mrUpdate("transactions", req.body, (data) => {
-    res.render("completePayment", { title: "complete payment", result: data });
+    res.render("mrCompletePayment", { title: "complete payment", result: data });
   });
 });
 

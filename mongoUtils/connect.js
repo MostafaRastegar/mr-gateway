@@ -31,7 +31,6 @@ const mrInitCollections = () => {
       const inputUserData = {
         userName: "john",
         userPassword: "password123admin",
-        role: "admin",
         token: "youraccesstokensecret",
       };
       const inputDataTransaction = {
@@ -40,7 +39,9 @@ const mrInitCollections = () => {
         callBackUrl: "http://localhost:4001/success",
         amount: "800",
         saleOrderId: "3333",
-        SaleReferenceId: 5215660,
+        saleReferenceId: 5215660,
+        resCode: 0,
+        dateTime: "2020-06-14 07:08:13",
       };
       mrCheckAndInsert(db, dbCollections, inputUserData, "users");
       mrCheckAndInsert(db, dbCollections, inputDataTransaction, "transactions");
@@ -71,9 +72,9 @@ const mrInsertOne = (collectionName, input, callFunc) => {
 };
 
 const mrUpdate = (collectionName, input, callFunc) => {
-  const { id, ResCode,refId } = input;
+  const { refId,resCode } = input;
   mrConnect((db, client) => {
-    db.collection(collectionName).update({"refId": refId},{$set: { "ResCode": ResCode}}, (findErr, addResult) => {
+    db.collection(collectionName).update({"refId": refId},{$set: { "resCode": resCode}}, (findErr, addResult) => {
       if (findErr) throw findErr;
       callFunc(input);
     });

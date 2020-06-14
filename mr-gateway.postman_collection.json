@@ -26,7 +26,7 @@
 					"enabled": true
 				}
 			],
-			"url": "{{serverUrl}}/bank",
+			"url": "{{serverUrl}}/mrPayRequet",
 			"queryParams": [],
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -48,18 +48,39 @@
 					"description": ""
 				},
 				{
-					"key": "refId",
-					"value": "a3878307-cf74-477d-ac85-35c1f4715d01",
-					"description": "",
-					"type": "text",
-					"enabled": true
-				},
-				{
 					"key": "amount",
 					"value": "650000",
 					"type": "text",
 					"enabled": true,
 					"description": ""
+				},
+				{
+					"key": "userName",
+					"value": "john",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "userPassword",
+					"value": "password123admin",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "token",
+					"value": "youraccesstokensecret",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "",
+					"value": "",
+					"description": "",
+					"type": "text",
+					"enabled": false
 				}
 			],
 			"dataMode": "urlencoded",
@@ -67,8 +88,8 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1591994496556,
-			"name": "{{serverUrl}}/bank",
+			"time": 1592108341176,
+			"name": "mrPayRequet",
 			"description": "",
 			"collectionId": "52451f39-9427-b27d-4a37-4cf759c041bf",
 			"responses": []
@@ -84,7 +105,7 @@
 					"enabled": true
 				}
 			],
-			"url": "{{serverUrl}}/complete-payment",
+			"url": "{{serverUrl}}/mrCompletePayment",
 			"queryParams": [],
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -92,21 +113,21 @@
 			"method": "POST",
 			"data": [
 				{
-					"key": "orderId",
+					"key": "saleOrderId",
 					"value": "3355",
 					"type": "text",
 					"enabled": true,
 					"description": ""
 				},
 				{
-					"key": "callBackUrl",
-					"value": "{{callBackUrl}}",
+					"key": "saleReferenceId",
+					"value": "5215660",
 					"type": "text",
 					"enabled": true,
 					"description": ""
 				},
 				{
-					"key": "ResCode",
+					"key": "resCode",
 					"value": "0",
 					"type": "text",
 					"enabled": true,
@@ -114,7 +135,7 @@
 				},
 				{
 					"key": "refId",
-					"value": "a3878307-cf74-477d-ac85-35c1f4715d01",
+					"value": "036c4805-229e-4bbd-ae2c-d14fb4be0fc8",
 					"description": "",
 					"type": "text",
 					"enabled": true
@@ -125,8 +146,8 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1591994410441,
-			"name": "{{serverUrl}}/complete-payment",
+			"time": 1592108005732,
+			"name": "mrCompletePayment",
 			"description": "",
 			"collectionId": "52451f39-9427-b27d-4a37-4cf759c041bf",
 			"responses": []
@@ -184,7 +205,7 @@
 			"currentHelper": "normal",
 			"helperAttributes": {},
 			"time": 1591994553211,
-			"name": "{{serverUrl}}/users",
+			"name": "users",
 			"description": "",
 			"collectionId": "52451f39-9427-b27d-4a37-4cf759c041bf",
 			"responses": []
@@ -242,18 +263,18 @@
 			"currentHelper": "normal",
 			"helperAttributes": {},
 			"time": 1591994414392,
-			"name": "{{serverUrl}}/transactions",
+			"name": "transactions",
 			"description": "",
 			"collectionId": "52451f39-9427-b27d-4a37-4cf759c041bf",
 			"responses": []
 		},
 		{
 			"id": "d65e7228-ee86-152d-0dd6-5030469bda41",
-			"headers": "Content-Type: application/x-www-form-urlencoded\n",
+			"headers": "Content-Type: application/json\n",
 			"headerData": [
 				{
 					"key": "Content-Type",
-					"value": "application/x-www-form-urlencoded",
+					"value": "application/json",
 					"description": "",
 					"enabled": true
 				}
@@ -264,38 +285,17 @@
 			"pathVariables": {},
 			"pathVariableData": [],
 			"method": "POST",
-			"data": [
-				{
-					"key": "userName",
-					"value": "john",
-					"type": "text",
-					"enabled": true,
-					"description": ""
-				},
-				{
-					"key": "userPassword",
-					"value": "password123admin",
-					"type": "text",
-					"enabled": true,
-					"description": ""
-				},
-				{
-					"key": "token",
-					"value": "youraccesstokensecret",
-					"type": "text",
-					"enabled": true,
-					"description": ""
-				}
-			],
-			"dataMode": "urlencoded",
+			"data": [],
+			"dataMode": "raw",
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1591993964111,
-			"name": "{{serverUrl}}/login",
+			"time": 1592104608345,
+			"name": "login",
 			"description": "",
 			"collectionId": "52451f39-9427-b27d-4a37-4cf759c041bf",
-			"responses": []
+			"responses": [],
+			"rawModeData": "{\n\t\"userName\": \"john\",\n\t\"userPassword\": \"password123admin\",\n\t\"token\": \"youraccesstokensecret\"\n\t\n}"
 		}
 	]
 }

@@ -1,0 +1,25 @@
+extends layout
+block content
+  .main-loader
+    .main-loader-body
+      span
+        span
+        span
+        span
+        span
+      .base
+        span
+        .face
+    .longfazers
+      span
+      span
+      span
+      span
+    h1.main-loader-title Redirecting
+    form(action="#{result.callBackUrl}",method="post", name="mrCompletePayment")
+      input(type="hidden", name="resCode", value="#{result.resCode}")
+      input(type="hidden", name="refId", value="#{result.refId}")
+      input(type="hidden", name="saleOrderId", value="#{result.saleOrderId}")
+      input(type="hidden", name="saleReferenceId", value="#{result.saleReferenceId}")
+    script.
+      document.forms['mrCompletePayment'].submit()

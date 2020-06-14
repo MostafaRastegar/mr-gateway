@@ -1,0 +1,190 @@
+{
+	"info": {
+		"_postman_id": "8e71aaaf-6f9d-485d-bcb7-528bcf507f73",
+		"name": "mr-gateway",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userName\": \"mr_gateway\",\n\t\"userPassword\": \"mr_gateway_123456\",\n\t\"terminalId\": 442530\n\t\n}"
+				},
+				"url": {
+					"raw": "{{serverUrl}}/login",
+					"host": [
+						"{{serverUrl}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mrPayRequet",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "orderId",
+							"value": "3355",
+							"type": "text"
+						},
+						{
+							"key": "callBackUrl",
+							"value": "{{callBackUrl}}",
+							"type": "text"
+						},
+						{
+							"key": "amount",
+							"value": "650000",
+							"type": "text"
+						},
+						{
+							"key": "userName",
+							"value": "mr_gateway",
+							"type": "text"
+						},
+						{
+							"key": "userPassword",
+							"value": "mr_gateway_123456",
+							"type": "text"
+						},
+						{
+							"key": "terminalId",
+							"value": "442530",
+							"type": "text"
+						},
+						{
+							"key": "",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{serverUrl}}/mrPayRequet",
+					"host": [
+						"{{serverUrl}}"
+					],
+					"path": [
+						"mrPayRequet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mrCompletePayment",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "saleOrderId",
+							"value": "3355",
+							"type": "text"
+						},
+						{
+							"key": "saleReferenceId",
+							"value": "5215660",
+							"type": "text"
+						},
+						{
+							"key": "resCode",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "refId",
+							"value": "036c4805-229e-4bbd-ae2c-d14fb4be0fc8",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{serverUrl}}/mrCompletePayment",
+					"host": [
+						"{{serverUrl}}"
+					],
+					"path": [
+						"mrCompletePayment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "transactions",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"url": {
+					"raw": "{{serverUrl}}/transactions",
+					"host": [
+						"{{serverUrl}}"
+					],
+					"path": [
+						"transactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "users",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"url": {
+					"raw": "{{serverUrl}}/users",
+					"host": [
+						"{{serverUrl}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

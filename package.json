@@ -16,6 +16,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.5.8",
     "morgan": "~1.9.1",
+    "node-datetime": "^2.1.2",
     "nodemon": "^2.0.4",
     "uuid": "^8.1.0"
   }

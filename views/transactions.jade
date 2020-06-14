@@ -8,6 +8,7 @@ block content
       tr
         td Id
         td RefId
+        td ResCode
         td Amount
         td SaleOrderId
         td SaleReferenceId
@@ -17,7 +18,8 @@ block content
         tr
           td #{transaction._id}
           td #{transaction.refId}
+          td #{transaction.resCode}
           td #{transaction.amount}
           td #{transaction.saleOrderId}
-          td #{transaction.SaleReferenceId}
+          td #{transaction.saleReferenceId}
           td #{transaction.callBackUrl}

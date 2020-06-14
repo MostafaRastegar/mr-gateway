@@ -1,14 +1,23 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const { mrConnect, mrFindAll, mrInsertOne } = require("../mongoUtils/connect");
+const dateTime = require("node-datetime");
+const serverdateTime = dateTime.create();
+
+const {
+  mrConnect,
+  mrFindAll,
+  mrInsertOne,
+  mrInitCollections,
+  mrUpdate,
+} = require("../mongoUtils/connect");
 const { v4: uuidv4 } = require("uuid");
-const { ACCESS_TOKEN } = process.env;
 const router = express.Router();
 dotenv.config();
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  res.render("index", { title: "Express" });
+  mrInitCollections();
+  res.render("index", { title: "mr-gateway" });
 });
 
 /* GET users page. */
@@ -29,14 +38,61 @@ router.get("/transactions", function (req, res, next) {
 });
 
 router.post("/login", function (req, res, next) {
-  const { userName, userPassword, token } = req.body;
+  const { userName, userPassword, terminalId } = req.body;
   mrFindAll("users", (data) => {
-    const user = data.find((u) => {
-      return u.userName === userName && u.userPassword === userPassword;
+    const user = data.find((userItem) => {
+      return (
+        userItem.userName === userName &&
+        userItem.userPassword === userPassword &&
+        userItem.terminalId === parseInt(terminalId)
+      );
     });
-    if (user && user.token === ACCESS_TOKEN) {
+    console.log(user)
+    if (user) {
       res.json({
-        status: "ok",
+        status: "true",
+      });
+    } else {
+      res.json({
+        status: "false",
+      });
+    }
+  });
+});
+
+// Post Pay request
+router.post("/mrPayRequet", function (req, res, next) {
+  const {
+    orderId,
+    callBackUrl,
+    amount,
+    userName,
+    userPassword,
+    terminalId,
+  } = req.body;
+
+  mrFindAll("users", (data) => {
+    const user = data.find((userItem) => {
+      return (
+        userItem.userName === userName &&
+        userItem.userPassword === userPassword &&
+        userItem.terminalId === parseInt(terminalId)
+      );
+    });
+    if (user) {
+      const inputData = {
+        orderId,
+        callBackUrl,
+        amount,
+        dateTime: serverdateTime.format("Y-m-d H:M:S"),
+        refId: uuidv4(),
+        saleOrderId: orderId,
+        saleReferenceId: Math.floor(Math.random() * 10000000),
+      };
+
+      mrInsertOne("transactions", inputData, (data) => {
+        // res.json(data)
+        res.render("mrPayRequet", { title: "Mr gateway", result: data });
       });
     } else {
       res.send("Username or userPassword incorrect");
@@ -44,28 +100,12 @@ router.post("/login", function (req, res, next) {
   });
 });
 
-router.post("/bank", function (req, res, next) {
-  const {
-    orderId,
-    token,
-    callBackUrl,
-    amount,
-    userName,
-    userPassword,
-  } = req.body;
-  const refId = uuidv4();
-
-  const inputData = {
-    refId,
-    orderId,
-    callBackUrl,
-    amount,
-    saleOrderId: orderId,
-    SaleReferenceId: Math.floor(Math.random() * 10000000),
-  };
-
-  mrInsertOne("transactions", inputData, (data) => {
-    res.render("bank", { title: "Bank gateway", result: data });
+router.post("/mrCompletePayment", function (req, res, next) {
+  mrUpdate("transactions", req.body, (data) => {
+    res.render("mrCompletePayment", {
+      title: "complete payment",
+      result: data,
+    });
   });
 });
 

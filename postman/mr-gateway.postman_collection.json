@@ -17,7 +17,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"userName\": \"mr_gateway\",\n\t\"userPassword\": \"mr_gateway_123456\",\n\t\"terminalId\": 442530\n\t\n}"
+					"raw": "{\n\t\"userName\": \"mr_gateway\",\n\t\"userPassword\": \"mr_gateway_123456\",\n\t\"terminalId\": 442530\n\t\n}",
+					"options": {
+						"raw": {}
+					}
 				},
 				"url": {
 					"raw": "{{serverUrl}}/login",
@@ -75,12 +78,29 @@
 							"type": "text"
 						},
 						{
-							"key": "",
-							"value": "",
-							"type": "text",
-							"disabled": true
+							"key": "localDate",
+							"value": "20201606",
+							"type": "text"
+						},
+						{
+							"key": "localTime",
+							"value": "101920",
+							"type": "text"
+						},
+						{
+							"key": "payerId",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "additionalData",
+							"value": "this is for test",
+							"type": "text"
 						}
-					]
+					],
+					"options": {
+						"urlencoded": {}
+					}
 				},
 				"url": {
 					"raw": "{{serverUrl}}/mrPayRequet",
@@ -89,6 +109,41 @@
 					],
 					"path": [
 						"mrPayRequet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mrPayAction",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "refId",
+							"value": "8c5e2874-2911-4471-a2cd-3f7a4b2a162c",
+							"type": "text"
+						}
+					],
+					"options": {
+						"urlencoded": {}
+					}
+				},
+				"url": {
+					"raw": "{{serverUrl}}/mrPayAction",
+					"host": [
+						"{{serverUrl}}"
+					],
+					"path": [
+						"mrPayAction"
 					]
 				}
 			},
@@ -108,26 +163,20 @@
 					"mode": "urlencoded",
 					"urlencoded": [
 						{
-							"key": "saleOrderId",
-							"value": "3355",
-							"type": "text"
-						},
-						{
-							"key": "saleReferenceId",
-							"value": "5215660",
-							"type": "text"
-						},
-						{
 							"key": "resCode",
-							"value": "0",
+							"value": "17",
+							"description": "0 = success , 17 = failed",
 							"type": "text"
 						},
 						{
 							"key": "refId",
-							"value": "036c4805-229e-4bbd-ae2c-d14fb4be0fc8",
+							"value": "8c5e2874-2911-4471-a2cd-3f7a4b2a162c",
 							"type": "text"
 						}
-					]
+					],
+					"options": {
+						"urlencoded": {}
+					}
 				},
 				"url": {
 					"raw": "{{serverUrl}}/mrCompletePayment",
@@ -180,6 +229,28 @@
 					],
 					"path": [
 						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "InitCollections",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"url": {
+					"raw": "{{serverUrl}}/",
+					"host": [
+						"{{serverUrl}}"
+					],
+					"path": [
+						""
 					]
 				}
 			},

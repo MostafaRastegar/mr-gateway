@@ -78,7 +78,7 @@ class PaymentController {
           data: {},
         });
       }
-      return res.status(200).render("mrPayAction", {
+      return res.status(200).render("payAction", {
         success: "true",
         message: "Please select your request",
         data: {
@@ -95,7 +95,7 @@ class PaymentController {
       mrFindAll("transactions", (data) => {
         const transaction = data.find((item) => {
           if (item.refId === transData.refId) {
-            return res.status(200).render("mrCompletePayment", {
+            return res.status(200).render("completePayment", {
               success: "true",
               message: "Complete payment",
               data: {

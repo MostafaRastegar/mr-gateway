@@ -13,12 +13,12 @@ block content
           td #{result.amount}
     div.text-center.row
       .col
-        form(action="/mrCompletePayment",method="post", name="bank")
+        form(action="/completePayment",method="post", name="bank")
           input(type="hidden", name="refId", value="#{result.refId}")
           input(type="hidden", name="resCode", value="0")
           button.btn.btn-success(type="submit") success
       .col
-        form(action="/mrCompletePayment",method="post", name="bank")
+        form(action="/completePayment",method="post", name="bank")
           input(type="hidden", name="refId", value="#{result.refId}")
           input(type="hidden", name="resCode", value="17")
           button.btn.btn-danger(type="submit") failed

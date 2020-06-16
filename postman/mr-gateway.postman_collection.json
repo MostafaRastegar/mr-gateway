@@ -35,7 +35,7 @@
 			"response": []
 		},
 		{
-			"name": "mrPayRequet",
+			"name": "payRequet",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -103,19 +103,19 @@
 					}
 				},
 				"url": {
-					"raw": "{{serverUrl}}/mrPayRequet",
+					"raw": "{{serverUrl}}/payRequet",
 					"host": [
 						"{{serverUrl}}"
 					],
 					"path": [
-						"mrPayRequet"
+						"payRequet"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "mrPayAction",
+			"name": "payAction",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -138,19 +138,19 @@
 					}
 				},
 				"url": {
-					"raw": "{{serverUrl}}/mrPayAction",
+					"raw": "{{serverUrl}}/payAction",
 					"host": [
 						"{{serverUrl}}"
 					],
 					"path": [
-						"mrPayAction"
+						"payAction"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "mrCompletePayment",
+			"name": "completePayment",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -179,12 +179,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{serverUrl}}/mrCompletePayment",
+					"raw": "{{serverUrl}}/completePayment",
 					"host": [
 						"{{serverUrl}}"
 					],
 					"path": [
-						"mrCompletePayment"
+						"completePayment"
 					]
 				}
 			},

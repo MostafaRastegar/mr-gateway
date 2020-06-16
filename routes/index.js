@@ -22,18 +22,13 @@ router.get("/", function (req, res, next) {
 
 /* GET users page. */
 router.get("/users", function (req, res, next) {
-  mrFindAll("users", (data) =>
-    res.render("users", { title: "Users table", result: data })
-  );
+  mrFindAll("users", (data) => res.json(data.reverse()));
 });
 
 /* GET transaction page. */
 router.get("/transactions", function (req, res, next) {
   mrFindAll("transactions", (data) => {
-    res.render("transactions", {
-      title: "Transactions table",
-      result: data.reverse(),
-    });
+    res.json(data.reverse());
   });
 });
 
@@ -47,7 +42,6 @@ router.post("/login", function (req, res, next) {
         userItem.terminalId === parseInt(terminalId)
       );
     });
-    console.log(user)
     if (user) {
       res.json({
         status: "true",
@@ -60,15 +54,13 @@ router.post("/login", function (req, res, next) {
   });
 });
 
-// Post Pay request
+// Post Pay request from user website
 router.post("/mrPayRequet", function (req, res, next) {
   const {
-    orderId,
-    callBackUrl,
-    amount,
     userName,
     userPassword,
     terminalId,
+    orderId,
   } = req.body;
 
   mrFindAll("users", (data) => {
@@ -79,31 +71,49 @@ router.post("/mrPayRequet", function (req, res, next) {
         userItem.terminalId === parseInt(terminalId)
       );
     });
-    if (user) {
-      const inputData = {
-        orderId,
-        callBackUrl,
-        amount,
-        dateTime: serverdateTime.format("Y-m-d H:M:S"),
-        refId: uuidv4(),
-        saleOrderId: orderId,
-        saleReferenceId: Math.floor(Math.random() * 10000000),
-      };
-
-      mrInsertOne("transactions", inputData, (data) => {
-        // res.json(data)
-        res.render("mrPayRequet", { title: "Mr gateway", result: data });
-      });
-    } else {
+    if (!user) {
       res.send("Username or userPassword incorrect");
     }
+    const inputData = {
+      ...req.body,
+      refId: uuidv4(),
+      saleOrderId: orderId,
+      saleReferenceId: Math.floor(Math.random() * 10000000),
+    };
+    mrInsertOne("transactions", inputData, (data) => {
+      res.json({
+        resCode: 0,
+        refId: data.refId,
+      });
+    });
   });
 });
 
+// Post Pay Action from user => success or failed
+router.post("/mrPayAction", function (req, res, next) {
+  const { refId } = req.body;
+
+  mrFindAll("transactions", (data) => {
+    const transaction = data.find((item) => {
+      return item.refId === refId;
+    });
+    if (!transaction) {
+      res.send("transaction not found");
+    }
+    res.render("mrPayAction", {
+      title: "Please select your request",
+      result: transaction,
+    });
+  });
+});
+
+// Auto redirect to user website
 router.post("/mrCompletePayment", function (req, res, next) {
-  mrUpdate("transactions", req.body, (data) => {
+  const inputData = req.body;
+  // inputData is {resCode, refCode}
+  mrUpdate("transactions", inputData, (data) => {
     res.render("mrCompletePayment", {
-      title: "complete payment",
+      title: "Complete payment",
       result: data,
     });
   });

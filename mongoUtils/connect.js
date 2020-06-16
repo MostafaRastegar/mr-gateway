@@ -34,14 +34,17 @@ const mrInitCollections = () => {
         terminalId: 442530,
       };
       const inputDataTransaction = {
-        refId: "036c4805-229e-4bbd-ae2c-d14fb4be0fc8",
-        orderId: "3333",
+        orderId: "3355",
         callBackUrl: "http://localhost:4001/success",
-        amount: "800",
-        saleOrderId: "3333",
-        saleReferenceId: 5215660,
-        resCode: 0,
-        dateTime: "2020-06-14 07:08:13",
+        amount: "650000",
+        localDate: "20201606",
+        localTime: "101920",
+        payerId: "10",
+        additionalData: "this is for test",
+        refId: "e363b21d-c8fa-445e-8c8d-d6b2c1250c8e",
+        saleOrderId: "3355",
+        saleReferenceId: 9012415,
+        resCode: "0"
       };
       mrCheckAndInsert(db, dbCollections, inputUserData, "users");
       mrCheckAndInsert(db, dbCollections, inputDataTransaction, "transactions");

@@ -16,6 +16,7 @@ block content
       span
       span
     h1.main-loader-title Redirecting
+    - var result = data.result
     form(action="#{result.callBackUrl}",method="post", name="mrCompletePayment")
       input(type="hidden", name="resCode", value="#{result.resCode}")
       input(type="hidden", name="refId", value="#{result.refId}")

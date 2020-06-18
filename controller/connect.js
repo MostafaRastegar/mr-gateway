@@ -2,17 +2,17 @@ const MongoClient = require("mongodb").MongoClient;
 const assert = require("assert");
 const dotenv = require("dotenv");
 dotenv.config();
-const { DB_URL, DB_NAME } = process.env;
+const { MONGO_DB, MONGO_USERNAME, MONGO_PASSWORD, MONGO_HOSTNAME, MONGO_PORT} = process.env;
+const dbUrl = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}?authSource=admin`;
 
 const mrConnect = (callFunc) => {
-  MongoClient.connect(DB_URL, function (err, client) {
+  MongoClient.connect(dbUrl, function (err, client) {
     assert.equal(null, err);
     console.log("Connected successfully to server");
-    db = client.db(DB_NAME);
+    db = client.db(MONGO_DB);
     callFunc(db, client);
   });
 };
-
 const mrCheckAndInsert = (db, dbCollections, inputData, collectionName) => {
   if (!dbCollections.includes(collectionName)) {
     db.createCollection(collectionName, function (err, res) {

@@ -1,0 +1,35 @@
+version: "3"
+services:
+  mr_gateway_app:
+    container_name: mr_gateway_app
+    restart: always
+    image: node:latest
+    working_dir: /app
+    command: bash -c "npm install && npm start"
+    environment:
+      - MONGO_USERNAME=$MONGO_USERNAME
+      - MONGO_PASSWORD=$MONGO_PASSWORD
+      - MONGO_HOSTNAME=mr_gateway_mongo
+      - MONGO_PORT=$MONGO_PORT
+      - MONGO_DB=$MONGO_DB
+    ports:
+      - ${PORT:-3000}:3000
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+    depends_on:
+      - mr_gateway_mongo
+  mr_gateway_mongo:
+    container_name: mr_gateway_mongo
+    image: mongo:latest
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
+    volumes:
+      - dbdata/data/db
+    ports:
+      - ${MONGO_PORT:-27017}:27017
+volumes:
+  dbdata:
+  node_modules:

@@ -18,7 +18,7 @@ router.get(`${process.env.API_URL}/transactions`, userController.getAllTransacti
 router.post(`${process.env.API_URL}/login`, userController.loginUser);
 
 // Post Pay request from user website
-router.post(`${process.env.API_URL}/payRequet`, paymentController.postPayRequest);
+router.post(`${process.env.API_URL}/payRequest`, paymentController.postPayRequest);
 
 // Post Pay Action from user => success or failed
 router.post(`${process.env.API_URL}/payAction`, paymentController.postPayAction);

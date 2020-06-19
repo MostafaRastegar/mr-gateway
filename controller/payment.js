@@ -31,7 +31,7 @@ class PaymentController {
         terminalId,
       });
       if (!user) {
-        return res.status(404).send({
+        return res.status(404).json({
           success: "false",
           message: "Username or userPassword incorrect",
           data: {},
@@ -51,7 +51,7 @@ class PaymentController {
         saleReferenceId: Math.floor(Math.random() * 10000000),
       };
       mrInsertOne("transactions", inputData, (data) => {
-        return res.status(200).send({
+        return res.status(200).json({
           success: "true",
           message: "Create refId successfully",
           data: {
@@ -71,8 +71,7 @@ class PaymentController {
         return item.refId === refId;
       });
       if (!transaction) {
-        res.send("");
-        return res.status(404).send({
+        return res.status(404).json({
           success: "false",
           message: "transaction not found",
           data: {},
@@ -90,7 +89,7 @@ class PaymentController {
   };
   postCompletePayment = (req, res) => {
     const inputData = req.body;
-    // inputData is {refId, refCode}
+    // inputData is {refId, resCode}
     mrUpdate("transactions", inputData, (transData) => {
       mrFindAll("transactions", (data) => {
         const transaction = data.find((item) => {

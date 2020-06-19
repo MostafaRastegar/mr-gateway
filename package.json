@@ -1,6 +1,6 @@
 {
-  "name": "exp-1",
-  "version": "0.0.0",
+  "name": "mr-gateway",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www"

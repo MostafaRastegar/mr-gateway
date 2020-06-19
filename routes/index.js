@@ -1,112 +1,29 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const dateTime = require("node-datetime");
-const serverdateTime = dateTime.create();
-
-const {
-  mrConnect,
-  mrFindAll,
-  mrInsertOne,
-  mrInitCollections,
-  mrUpdate,
-} = require("../mongoUtils/connect");
-const { v4: uuidv4 } = require("uuid");
+const userController = require("../controller/user");
+const paymentController = require("../controller/payment");
 const router = express.Router();
 dotenv.config();
 
 /* GET home page. */
-router.get("/", function (req, res, next) {
-  mrInitCollections();
-  res.render("index", { title: "mr-gateway" });
-});
+router.get("/", userController.setInitData);
+router.get(`${process.env.API_URL}/`, userController.setInitData);
 
 /* GET users page. */
-router.get("/users", function (req, res, next) {
-  mrFindAll("users", (data) =>
-    res.render("users", { title: "Users table", result: data })
-  );
-});
+router.get(`${process.env.API_URL}/users`, userController.getAllUsers);
 
 /* GET transaction page. */
-router.get("/transactions", function (req, res, next) {
-  mrFindAll("transactions", (data) => {
-    res.render("transactions", {
-      title: "Transactions table",
-      result: data.reverse(),
-    });
-  });
-});
+router.get(`${process.env.API_URL}/transactions`, userController.getAllTransaction);
 
-router.post("/login", function (req, res, next) {
-  const { userName, userPassword, terminalId } = req.body;
-  mrFindAll("users", (data) => {
-    const user = data.find((userItem) => {
-      return (
-        userItem.userName === userName &&
-        userItem.userPassword === userPassword &&
-        userItem.terminalId === parseInt(terminalId)
-      );
-    });
-    console.log(user)
-    if (user) {
-      res.json({
-        status: "true",
-      });
-    } else {
-      res.json({
-        status: "false",
-      });
-    }
-  });
-});
+router.post(`${process.env.API_URL}/login`, userController.loginUser);
 
-// Post Pay request
-router.post("/mrPayRequet", function (req, res, next) {
-  const {
-    orderId,
-    callBackUrl,
-    amount,
-    userName,
-    userPassword,
-    terminalId,
-  } = req.body;
+// Post Pay request from user website
+router.post(`${process.env.API_URL}/payRequest`, paymentController.postPayRequest);
 
-  mrFindAll("users", (data) => {
-    const user = data.find((userItem) => {
-      return (
-        userItem.userName === userName &&
-        userItem.userPassword === userPassword &&
-        userItem.terminalId === parseInt(terminalId)
-      );
-    });
-    if (user) {
-      const inputData = {
-        orderId,
-        callBackUrl,
-        amount,
-        dateTime: serverdateTime.format("Y-m-d H:M:S"),
-        refId: uuidv4(),
-        saleOrderId: orderId,
-        saleReferenceId: Math.floor(Math.random() * 10000000),
-      };
+// Post Pay Action from user => success or failed
+router.post(`${process.env.API_URL}/payAction`, paymentController.postPayAction);
 
-      mrInsertOne("transactions", inputData, (data) => {
-        // res.json(data)
-        res.render("mrPayRequet", { title: "Mr gateway", result: data });
-      });
-    } else {
-      res.send("Username or userPassword incorrect");
-    }
-  });
-});
-
-router.post("/mrCompletePayment", function (req, res, next) {
-  mrUpdate("transactions", req.body, (data) => {
-    res.render("mrCompletePayment", {
-      title: "complete payment",
-      result: data,
-    });
-  });
-});
+// Auto redirect to user website
+router.post(`${process.env.API_URL}/completePayment`, paymentController.postCompletePayment);
 
 module.exports = router;

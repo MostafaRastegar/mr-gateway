@@ -12,6 +12,7 @@ block content
         td Amount
         td SaleOrderId
         td SaleReferenceId
+        td DateTime
         td CallBackUrl
     tbody
       each transaction in transactions
@@ -22,4 +23,5 @@ block content
           td #{transaction.amount}
           td #{transaction.saleOrderId}
           td #{transaction.saleReferenceId}
+          td #{transaction.dateTime}
           td #{transaction.callBackUrl}

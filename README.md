@@ -88,3 +88,4 @@
 |  String|پرداخت موفق  | 0 | resCode |  2|
 | Long | شماره فاکتور | 3355 |saleOrderId  |3  |
 | Long |كد مرجع تراكنش | 8107178 | saleReferenceId |  4|
+

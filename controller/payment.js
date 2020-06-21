@@ -89,19 +89,13 @@ class PaymentController {
   };
   postCompletePayment = (req, res) => {
     const { refId, resCode } = req.body;
-    // inputData is {refId, resCode}
     const inputDataUpdate = {
-      selector: {
-        refId,
-      },
-      data: {
-        resCode,
-      },
+      selector: { refId },
+      data: { resCode },
     };
     mrUpdate("transactions", inputDataUpdate, (transData) => {
       mrFindAll("transactions", (data) => {
         const transaction = data.find((item) => {
-          console.log(item,transData)
           if (item.refId === transData.refId) {
             return res.status(200).render("completePayment", {
               success: "true",

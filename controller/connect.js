@@ -85,18 +85,6 @@ const mrInsertOne = (collectionName, input, callFunc) => {
 
 const mrUpdate = (collectionName, input, callFunc) => {
   const { selector, data } = input;
-  // input = {
-  //   selector : {
-  //     refId: 102222
-  //   },
-  //   data: {
-  //     rescode: 44522554
-  //   }
-  // }
-  console.log({
-    selector,
-    set:{ $set: data },
-  })
   mrConnect((db, client) => {
     db.collection(collectionName).update(
       selector,

@@ -10,7 +10,7 @@ const {
 } = require("../controller/connect");
 const userController = require("../controller/user");
 class BPardakhtController {
-  postPayRequest = (req, res) => {
+  postPayRequest = (req,res) => {
     const {
       orderId,
       callBackUrl,
@@ -22,6 +22,7 @@ class BPardakhtController {
       additionalData,
       userName,
       userPassword,
+      gateWayName
     } = req.body;
 
     mrFindAll("users", (data) => {
@@ -46,6 +47,7 @@ class BPardakhtController {
         localTime,
         payerId,
         additionalData,
+        gateWayName,
         refId: uuidv4(),
         saleOrderId: orderId,
         saleReferenceId: Math.floor(Math.random() * 10000000),
@@ -57,6 +59,7 @@ class BPardakhtController {
           data: {
             resCode: 0,
             refId: data.refId,
+            gateWayName: data.gateWayName
           },
         });
       });

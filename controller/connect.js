@@ -91,7 +91,7 @@ const mrUpdate = (collectionName, input, callFunc) => {
       { $set: data },
       (findErr, addResult) => {
         if (findErr) throw findErr;
-        callFunc({...input.selector});
+        callFunc({ ...input.selector });
       }
     );
     client.close();

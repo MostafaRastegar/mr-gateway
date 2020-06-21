@@ -7,9 +7,9 @@ const {
   mrFindAll,
   mrInsertOne,
   mrUpdate,
-} = require("./connect");
-const userController = require("./user");
-class PaymentController {
+} = require("../controller/connect");
+const userController = require("../controller/user");
+class BPardakhtController {
   postPayRequest = (req, res) => {
     const {
       orderId,
@@ -25,7 +25,7 @@ class PaymentController {
     } = req.body;
 
     mrFindAll("users", (data) => {
-      const user = userController.getOneUser(data, {
+      const user = this.getOneUser(data, {
         userName,
         userPassword,
         terminalId,
@@ -109,7 +109,16 @@ class PaymentController {
       });
     });
   };
+  getOneUser = (data, userParams) => {
+    const user = data.find(
+      (userItem) =>
+        userItem.userName === userParams.userName &&
+        userItem.userPassword === userParams.userPassword &&
+        userItem.terminalId === parseInt(userParams.terminalId)
+    );
+    return user;
+  };
 }
 
-const paymentController = new PaymentController();
-module.exports = paymentController;
+const bPardakhtController = new BPardakhtController();
+module.exports = bPardakhtController;

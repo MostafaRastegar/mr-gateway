@@ -1,6 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 
-const { mrFindAll, mrInsertOne, mrUpdate } = require('../controller/connect');
+const { mrFindAll, mrInsertOne, mrUpdate } = require('../services/utils');
 
 class BPardakhtController {
   postPayRequest(req, res) {
@@ -42,7 +42,7 @@ class BPardakhtController {
 
         return mrInsertOne('transactions', inputData, (dataInsert) =>
           res.status(200).json({
-            success: 'true',
+            success: true,
             message: 'Create refId successfully',
             data: {
               resCode: 0,
@@ -52,8 +52,8 @@ class BPardakhtController {
           })
         );
       }
-      return res.status(404).json({
-        success: 'false',
+      return res.status(200).json({
+        success: false,
         message: 'Username or userPassword incorrect',
         data: {},
       });
@@ -66,14 +66,14 @@ class BPardakhtController {
     mrFindAll('transactions', (data) => {
       const transaction = data.find((item) => item.refId === refId);
       if (!transaction) {
-        return res.status(404).json({
-          success: 'false',
+        return res.status(200).json({
+          success: false,
           message: 'transaction not found',
           data: {},
         });
       }
       return res.status(200).render('payAction', {
-        success: 'true',
+        success: true,
         message: 'Please select your request',
         data: {
           title: 'Please select your request',
@@ -92,22 +92,21 @@ class BPardakhtController {
 
     mrUpdate('transactions', inputDataUpdate, (transData) => {
       mrFindAll('transactions', (data) => {
-        data.find((item) => {
-          if (item.refId !== transData.refId) {
-            return res.status(404).render('completePayment', {
-              success: 'false',
-              message: 'Error Complete page',
-              data: {},
-            });
-          }
-          return res.status(200).render('completePayment', {
-            success: 'true',
-            message: 'Complete payment',
-            data: {
-              title: 'Complete payment',
-              result: item,
-            },
+        const filterData = data.find((item) => item.refId === transData.refId);
+        if (!filterData) {
+          return res.status(404).json({
+            success: false,
+            message: 'Error Complete page',
+            data: {},
           });
+        }
+        return res.status(200).render('completePayment', {
+          success: true,
+          message: 'Complete payment',
+          data: {
+            title: 'Complete payment',
+            result: filterData,
+          },
         });
       });
     });

@@ -1,4 +1,4 @@
-const { mrInitCollections, mrFindAll } = require('./connect');
+const { mrInitCollections, mrFindAll } = require('../services/utils');
 
 class UserController {
   constructor() {
@@ -8,32 +8,58 @@ class UserController {
   setInitData(req, res) {
     mrInitCollections();
     // res.render("index", { title: "mr-gateway" });
-    return res.status(200).render('index', {
-      success: 'true',
-      message: 'Add Collections to database successfully',
-      data: {
-        title: 'Add Collections to database successfully',
-      },
-    });
+    try {
+      return res.status(200).render('index', {
+        success: true,
+        message: 'Add Collections to database successfully',
+        data: {
+          title: 'Add Collections to database successfully',
+        },
+      });
+    } catch (err) {
+      return res.status(400).json({
+        success: false,
+        message: 'Can not add collectios to database',
+        data: {
+          title: 'Can not add collectios to database',
+        },
+      });
+    }
   }
 
   getAllUsers(req, res) {
-    mrFindAll('users', (data) =>
-      res.status(200).json({
-        success: 'true',
-        message: 'users retrieved successfully',
-        data,
-      })
-    );
+    mrFindAll('users', (data) => {
+      try {
+        return res.status(200).json({
+          success: true,
+          message: 'users received successfully',
+          data,
+        });
+      } catch (err) {
+        return res.status(400).json({
+          success: false,
+          message: 'users not fond',
+          data: [],
+        });
+      }
+    });
   }
 
   getAllTransaction(req, res) {
     mrFindAll('transactions', (data) => {
-      return res.status(200).json({
-        success: 'true',
-        message: 'transactions retrieved successfully',
-        data,
-      });
+      try {
+        return res.status(200).json({
+          success: true,
+          message: 'transactions received successfully',
+          data,
+        });
+      } catch (err) {
+        return res.status(400).json({
+          success: false,
+          message: 'transactions not fond',
+          data: [],
+        });
+      }
     });
   }
 
@@ -53,14 +79,14 @@ class UserController {
       const user = this.getOneUser(data, userParams);
       if (!user) {
         return res.status(404).json({
-          success: 'false',
+          success: false,
           message: 'user not found',
           data: [],
         });
       }
       return res.status(200).json({
-        success: 'true',
-        message: 'user retrieved successfully',
+        success: true,
+        message: 'user received successfully',
         data: user,
       });
     });

@@ -1,3 +1,3 @@
-const gatewayGetFactory = require("./gatewayGet");
+const gatewayGetFactory = require('./gatewayGet');
 
 module.exports = gatewayGetFactory;

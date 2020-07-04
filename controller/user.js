@@ -1,71 +1,70 @@
-const { mrInitCollections, mrFindAll } = require("./connect");
+const { mrInitCollections, mrFindAll } = require('./connect');
+
 class UserController {
-  // constructor(params) {
-  //     // Chain constructor with super
-  //     super(params);
-  //
-  //     // Add a new property
-  //     this.getOneUser = params.getOneUser;
-  // }
-  setInitData = (req, res) => {
+  constructor() {
+    this.loginUser = this.loginUser.bind(this);
+  }
+
+  setInitData(req, res) {
     mrInitCollections();
     // res.render("index", { title: "mr-gateway" });
-    return res.status(200).render("index", {
-      success: "true",
-      message: "Add Collections to database successfully",
+    return res.status(200).render('index', {
+      success: 'true',
+      message: 'Add Collections to database successfully',
       data: {
-        title: "Add Collections to database successfully",
+        title: 'Add Collections to database successfully',
       },
     });
-  };
-  getAllUsers = (req, res) => {
-    mrFindAll("users", (data) => {
+  }
+
+  getAllUsers(req, res) {
+    mrFindAll('users', (data) =>
+      res.status(200).json({
+        success: 'true',
+        message: 'users retrieved successfully',
+        data,
+      })
+    );
+  }
+
+  getAllTransaction(req, res) {
+    mrFindAll('transactions', (data) => {
       return res.status(200).json({
-        success: "true",
-        message: "users retrieved successfully",
+        success: 'true',
+        message: 'transactions retrieved successfully',
         data,
       });
     });
-  };
+  }
 
-  getAllTransaction = (req, res) => {
-    mrFindAll("transactions", (data) => {
-      return res.status(200).json({
-        success: "true",
-        message: "transactions retrieved successfully",
-        data,
-      });
-    });
-  };
-
-  getOneUser = (data, userParams) => {
+  getOneUser(data, userParams) {
     const user = data.find(
       (userItem) =>
         userItem.userName === userParams.userName &&
         userItem.userPassword === userParams.userPassword &&
-        userItem.terminalId === parseInt(userParams.terminalId)
+        userItem.terminalId === parseInt(userParams.terminalId, 10)
     );
     return user;
-  };
+  }
 
-  loginUser = (req, res) => {
+  loginUser(req, res) {
     const userParams = req.body;
-    mrFindAll("users", (data) => {
+    mrFindAll('users', (data) => {
       const user = this.getOneUser(data, userParams);
       if (!user) {
         return res.status(404).json({
-          success: "false",
-          message: "user not found",
+          success: 'false',
+          message: 'user not found',
           data: [],
         });
       }
       return res.status(200).json({
-        success: "true",
-        message: "user retrieved successfully",
+        success: 'true',
+        message: 'user retrieved successfully',
         data: user,
       });
     });
-  };
+  }
 }
 
 const userController = new UserController();

@@ -15,10 +15,12 @@ block content
       .col
         form(action="/completePayment",method="post", name="bank")
           input(type="hidden", name="refId", value="#{result.refId}")
+          input(type="hidden", name="gateWayName", value="#{result.gateWayName}")
           input(type="hidden", name="resCode", value="0")
           button.btn.btn-success(type="submit") success
       .col
         form(action="/completePayment",method="post", name="bank")
           input(type="hidden", name="refId", value="#{result.refId}")
+          input(type="hidden", name="gateWayName", value="#{result.gateWayName}")
           input(type="hidden", name="resCode", value="17")
           button.btn.btn-danger(type="submit") failed

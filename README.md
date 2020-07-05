@@ -54,6 +54,7 @@
 | String | توضبحات پرداخت | this is for test | additionalData | 8 |
 | String | آدرس بازگشتی به سایت پذیرنده | http://localhost:4001 | callBackUrl | 9 |
 | long  | شناسه پرداخت | 10 | payerId | 10 |
+| String  |  انتخاب درگاه | BPardakht | gateWayName | 11 |
 
 <p dir="rtl">
 در صورتی که پارامتر های ارسالی شما درست باشد. یک کد یکتا برای درخواست شما ایجاد میشود.
